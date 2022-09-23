@@ -114,9 +114,9 @@ getShootingTime()
     let hoge = fileNames.enumerated().compactMap {$0.1.contains("きゅん") ? $0.0 : nil}
     for num in hoge {
     i += 1
-    fileNames[num] = "きゅんポイント\(i)"
+    fileNames[num] = "きゅんポイント\(i).mov"
     }
-    //print(fileNames)
+
     var formattedDateArray = [Date]()
     for date in shootingTime {
     let formatter: DateFormatter = DateFormatter()
@@ -128,8 +128,10 @@ getShootingTime()
     let dateSorted = formattedDateArray.enumerated().sorted { $0.element < $1.element }
 
     for (index, element) in dateSorted {
+    writeTextFile(text: "file \'")
     writeTextFile(text: fileNames[index])
+    writeTextFile(text: "\'")
     writeTextFile(text: "\n")
     }
-    
-    shell("ffmpeg -f concat -safe 0 -i list.txt -c copy matome.mov")
+
+    //shell("ffmpeg -f concat -safe 0 -i list.txt matome.mov")
