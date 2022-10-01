@@ -1,5 +1,3 @@
-//時系列に並べる
-
 import Foundation
 import AppKit
 import Photos
@@ -7,6 +5,7 @@ import ImageIO
 
 var fileNames = [String]()
 var shootingTime = [String]()
+var shootingDate = "0929"
 
 func shell(_ command: String) -> String {
     let task = Process()
@@ -51,14 +50,14 @@ func getExif(_ dirName: String)  -> String {
 }
 
 
-for count in 1...getFileInfoListInDir("0827").count{
-   //shell("ffmpeg -loop 1 -i /Users/sotomuramana/Documents/4proj/0827/image\(count).JPG -vcodec libx264 -pix_fmt yuv420p -t 3 -r 23.98 -s 1920x1080 -aspect \"16:9\" image\(count).mov")
+for count in 1...getFileInfoListInDir("0929").count{
+   //shell("ffmpeg -loop 1 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).JPG -vcodec libx264 -pix_fmt yuv420p -t 3 -r 23.98 -s 1920x1080 -aspect \"16:9\" /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).mov")
    fileNames.append("image\(count).mov")
-   shootingTime.append(getExif("/Users/sotomuramana/Documents/4proj/0827/image\(count).JPG"))
+   shootingTime.append(getExif("/Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).JPG"))
 }
 
 func getShootingTime() {
-    let filename2 = "test2.txt"
+    let filename2 = "/Users/sotomuramana/Documents/4proj/0929/test2.txt"
 
     guard let fileContents2 = try? String(contentsOfFile: filename2) else {
     fatalError("ファイル読み込みエラー")
@@ -74,7 +73,7 @@ func getShootingTime() {
 
 getShootingTime()
 
-    let filename = "test.txt"
+    let filename = "/Users/sotomuramana/Documents/4proj/0929/test.txt"
     var contents: String
     var time: [String] = []
     let dateformatter = DateFormatter()
@@ -88,11 +87,11 @@ getShootingTime()
     let lines = fileContents.split(separator:"\n")
     for line in lines{
     let elements = line.split(separator:",") //elements[1]に秒数,elements[0]にいいねポイントなど
-
     let Str = String(elements[1]) //elements[1]をstring型に変換
     let date = dateformatter.date(from: Str)! //date型に変換
     let date2 = Date(timeInterval: -2, since: date) //-2秒した時刻を取得
-    //shell("ffmpeg -ss \(dateformatter.string(from: date2))  -i 0827.mov -t 4 -vcodec libx264 \(elements[0]).mov")
+
+    //shell("ffmpeg -ss \(dateformatter.string(from: date2))  -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(shootingDate).mov -t 4 -vcodec libx264 /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(elements[0]).mov")
 
     if elements[0].contains("きゅん"){ //きゅんきゅんポイントが出てきた回数nを調べる
     n += 1
@@ -100,11 +99,18 @@ getShootingTime()
     }
 
     for count in 1...n {
-    //shell("ffmpeg -i きゅんきゅんポイント\(count).mov -i heart.mov -filter_complex \"[1:0]colorkey=black:0.01:1[colorkey];[0:0][colorkey]overlay=x=(W-w)/2:y=(H-h)/2\" -preset ultrafast きゅんポイント\(count).mov")
+    //shell("ffmpeg -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんきゅんポイント\(count).mov -i heart.mov -filter_complex \"[1:0]colorkey=black:0.01:1[colorkey];[0:0][colorkey]overlay=x=(W-w)/2:y=(H-h)/2\" -preset ultrafast /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんポイント\(count).mov")
     }
 
+    func createFile(_ fileName: String) -> Bool {
+        let fileManager = FileManager.default
+        let result = fileManager.createFile(atPath: fileName, contents: nil, attributes: nil)
+        return result
+    }
+
+
     func writeTextFile(text: String) {
-    let fileName = "list.txt"
+    let fileName = "/Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt"
     let contentString = text
     let file = FileHandle(forWritingAtPath: fileName)!
     let contentData = contentString.data(using: .utf8)!
@@ -129,11 +135,12 @@ getShootingTime()
 
     let dateSorted = formattedDateArray.enumerated().sorted { $0.element < $1.element }
 
+    //createFile("/Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt")
     for (index, element) in dateSorted {
-    writeTextFile(text: "file \'")
-    writeTextFile(text: fileNames[index])
-    writeTextFile(text: "\'")
-    writeTextFile(text: "\n")
+    //writeTextFile(text: "file \'")
+    //writeTextFile(text: fileNames[index])
+    //writeTextFile(text: "\'")
+    //writeTextFile(text: "\n")
     }
 
-    //shell("ffmpeg -f concat -safe 0 -i list.txt matome.mov")
+    //shell("ffmpeg -f concat -safe 0 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt /Users/sotomuramana/Documents/4proj/\(shootingDate)/matome.mov")
