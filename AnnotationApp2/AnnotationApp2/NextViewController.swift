@@ -19,14 +19,12 @@ class NextViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        str2.removeFirst(1)
-        str2.removeLast(1)
         for (str2, time2) in zip(str2, time2) {
             data.append("\(str2),\(time2)")
         }
         textLabel.text = data.joined(separator: "\n")
     }
-    
+     
     @IBAction func copyButtontapped(_ sender: Any) {
         UIPasteboard.general.string = data.joined(separator: "\n")
     }

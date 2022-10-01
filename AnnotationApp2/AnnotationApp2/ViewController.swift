@@ -34,7 +34,7 @@ class ViewController:UIViewController, UITableViewDelegate, UITableViewDataSourc
 }
     
     @IBAction func time(_ sender: Any) {
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
         let nowTime = formatter.string(from: NSDate() as Date)
         date1 = Date()
         list.append(nowTime)
@@ -43,7 +43,7 @@ class ViewController:UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @IBAction func stopButtontapped(_ sender: Any) {
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
         let nowTime = formatter.string(from: NSDate() as Date)
         list.append(nowTime)
         str.append("終了時間")
@@ -51,7 +51,7 @@ class ViewController:UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @IBAction func goodButtontapped(_ sender: Any) {
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
         let nowTime = formatter.string(from: NSDate() as Date)
         list.append(nowTime)
         goodpointTime += 1
@@ -65,7 +65,7 @@ class ViewController:UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @IBAction func cuteButtontapped(_ sender: Any) {
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
         let nowTime = formatter.string(from: NSDate() as Date)
         list.append(nowTime)
         cutepointTime += 1
@@ -81,7 +81,10 @@ class ViewController:UIViewController, UITableViewDelegate, UITableViewDataSourc
     @IBAction func copyButtontapped(_ sender: Any) {
         var data = [String]()
         str.removeFirst(1)
+        list.removeFirst(1)
         str.removeLast(1)
+        list.removeLast(1)
+        
         for (str, list) in zip(str, list) {
             data.append("\(str),\(list)")
     }
