@@ -1,3 +1,5 @@
+//時系列に並べる
+
 import Foundation
 import AppKit
 import Photos
