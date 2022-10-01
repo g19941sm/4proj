@@ -1,3 +1,5 @@
+//ランダムに並べる
+
 import Foundation
 import AppKit
 import Photos
