@@ -110,7 +110,7 @@ getShootingTime()
 
 
     func writeTextFile(text: String) {
-    let fileName = "/Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt"
+    let fileName = "/Users/sotomuramana/Documents/4proj/\(shootingDate)/list2.txt"
     let contentString = text
     let file = FileHandle(forWritingAtPath: fileName)!
     let contentData = contentString.data(using: .utf8)!
@@ -125,6 +125,7 @@ getShootingTime()
     fileNames[num] = "きゅんポイント\(i).mov"
     }
 
+    //createFile("/Users/sotomuramana/Documents/4proj/\(shootingDate)/list2.txt")
     for file in fileNames.shuffled() {
     //writeTextFile(text: "file \'")
     //writeTextFile(text: file)
@@ -132,4 +133,4 @@ getShootingTime()
     //writeTextFile(text: "\n")
     }
 
-    //shell("ffmpeg -f concat -safe 0 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt /Users/sotomuramana/Documents/4proj/\(shootingDate)/matome.mov")
+    shell("ffmpeg -f concat -safe 0 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/list2.txt /Users/sotomuramana/Documents/4proj/\(shootingDate)/matome2.mov")
