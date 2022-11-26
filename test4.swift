@@ -5,7 +5,7 @@ import ImageIO
 
 var fileNames = [String]()
 var shootingTime = [String]()
-var shootingDate = "1027"
+var shootingDate = "1111"
 
 func shell(_ command: String) -> String {
     let task = Process()
@@ -50,7 +50,7 @@ func getExif(_ dirName: String)  -> String {
 }
 
 for count in 1...getFileInfoListInDir(shootingDate).count{ //静止画を動画に変換
-   //shell("ffmpeg -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).JPG -vcodec libx264 -r 23.98 -vf \"zoompan=z=\'min(zoom+0.0015,1.5)\':d=\'25*4\':x=\'iw/2-(iw/zoom/2)\':y=\'ih/2-(ih/zoom/2)\'\" -s 1920x1080 -aspect \"16:9\" /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).avi")
+   shell("ffmpeg -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).JPG -vcodec libx264 -r 23.98 -vf \"zoompan=z=\'min(zoom+0.0015,1.5)\':d=\'25*4\':x=\'iw/2-(iw/zoom/2)\':y=\'ih/2-(ih/zoom/2)\'\" -s 1920x1080 -aspect \"16:9\" /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).avi")
    fileNames.append("image\(count).avi")
    shootingTime.append(getExif("/Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).JPG"))
 }
@@ -90,7 +90,7 @@ getShootingTime()
     let date = dateformatter.date(from: Str)! //date型に変換
     let date2 = Date(timeInterval: -2, since: date) //-2秒した時刻を取得
 
-    //shell("ffmpeg -ss \(dateformatter.string(from: date2))  -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(shootingDate).mov -t 4 -vcodec libx264 /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(elements[0]).avi")
+    shell("ffmpeg -ss \(dateformatter.string(from: date2))  -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(shootingDate).mov -t 4 -vcodec libx264 /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(elements[0]).avi")
 
     if elements[0].contains("きゅん"){ //きゅんきゅんポイントが出てきた回数nを調べる
     n += 1
@@ -98,7 +98,7 @@ getShootingTime()
     }
 
     for count in 1...n {
-    //shell("ffmpeg -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんきゅんポイント\(count).avi -i heart.mov -vcodec libx264 -filter_complex \"[1:0]colorkey=black:0.01:1[colorkey];[0:0][colorkey]overlay=x=(W-w)/2:y=(H-h)/2\" -preset ultrafast /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんポイント\(count).avi")
+    shell("ffmpeg -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんきゅんポイント\(count).avi -i heart.mov -vcodec libx264 -filter_complex \"[1:0]colorkey=black:0.01:1[colorkey];[0:0][colorkey]overlay=x=(W-w)/2:y=(H-h)/2\" -preset ultrafast /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんポイント\(count).avi")
     }
 
     func createFile(_ fileName: String) -> Bool {
@@ -134,15 +134,15 @@ getShootingTime()
 
     let dateSorted = formattedDateArray.enumerated().sorted { $0.element < $1.element }
 
-    //createFile("/Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt")
+    createFile("/Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt")
     for (index, element) in dateSorted {
-    //writeTextFile(text: "file \'")
-    //writeTextFile(text: fileNames[index])
-    //writeTextFile(text: "\'")
-    //writeTextFile(text: "\n")
+    writeTextFile(text: "file \'")
+    writeTextFile(text: fileNames[index])
+    writeTextFile(text: "\'")
+    writeTextFile(text: "\n")
     }
 
-    //shell("ffmpeg -f concat -safe 0 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt /Users/sotomuramana/Documents/4proj/\(shootingDate)/concat.mov")
+    shell("ffmpeg -f concat -safe 0 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/list.txt /Users/sotomuramana/Documents/4proj/\(shootingDate)/concat.mov")
 
     func getDuration() -> String { //まとめ動画の長さ取得
       return shell("ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 /Users/sotomuramana/Documents/4proj/\(shootingDate)/concat.mov")
