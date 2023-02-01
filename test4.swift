@@ -1,3 +1,4 @@
+//　時系列に並べたまとめ動画
 import Foundation
 import AppKit
 import Photos
