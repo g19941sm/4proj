@@ -1,3 +1,4 @@
+// ランダムに並べたまとめ動画
 import Foundation
 import AppKit
 import Photos
@@ -51,7 +52,7 @@ func getExif(_ dirName: String)  -> String {
 
 
 for count in 1...getFileInfoListInDir("0929").count{
-   //shell("ffmpeg -loop 1 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).JPG -vcodec libx264 -pix_fmt yuv420p -t 3 -r 23.98 -s 1920x1080 -aspect \"16:9\" /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).mov")
+   shell("ffmpeg -loop 1 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).JPG -vcodec libx264 -pix_fmt yuv420p -t 3 -r 23.98 -s 1920x1080 -aspect \"16:9\" /Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).mov")
    fileNames.append("image\(count).mov")
    shootingTime.append(getExif("/Users/sotomuramana/Documents/4proj/\(shootingDate)/image\(count).JPG"))
 }
@@ -91,7 +92,7 @@ getShootingTime()
     let date = dateformatter.date(from: Str)! //date型に変換
     let date2 = Date(timeInterval: -2, since: date) //-2秒した時刻を取得
 
-    //shell("ffmpeg -ss \(dateformatter.string(from: date2))  -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(shootingDate).mov -t 4 -vcodec libx264 /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(elements[0]).mov")
+    shell("ffmpeg -ss \(dateformatter.string(from: date2))  -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(shootingDate).mov -t 4 -vcodec libx264 /Users/sotomuramana/Documents/4proj/\(shootingDate)/\(elements[0]).mov")
 
     if elements[0].contains("きゅん"){ //きゅんきゅんポイントが出てきた回数nを調べる
     n += 1
@@ -99,7 +100,7 @@ getShootingTime()
     }
 
     for count in 1...n {
-    //shell("ffmpeg -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんきゅんポイント\(count).mov -i heart.mov -filter_complex \"[1:0]colorkey=black:0.01:1[colorkey];[0:0][colorkey]overlay=x=(W-w)/2:y=(H-h)/2\" -preset ultrafast /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんポイント\(count).mov")
+    shell("ffmpeg -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんきゅんポイント\(count).mov -i heart.mov -filter_complex \"[1:0]colorkey=black:0.01:1[colorkey];[0:0][colorkey]overlay=x=(W-w)/2:y=(H-h)/2\" -preset ultrafast /Users/sotomuramana/Documents/4proj/\(shootingDate)/きゅんポイント\(count).mov")
     }
 
     func createFile(_ fileName: String) -> Bool {
@@ -127,10 +128,10 @@ getShootingTime()
 
     //createFile("/Users/sotomuramana/Documents/4proj/\(shootingDate)/list2.txt")
     for file in fileNames.shuffled() {
-    //writeTextFile(text: "file \'")
-    //writeTextFile(text: file)
-    //writeTextFile(text: "\'")
-    //writeTextFile(text: "\n")
+    writeTextFile(text: "file \'")
+    writeTextFile(text: file)
+    writeTextFile(text: "\'")
+    writeTextFile(text: "\n")
     }
 
     shell("ffmpeg -f concat -safe 0 -i /Users/sotomuramana/Documents/4proj/\(shootingDate)/list2.txt /Users/sotomuramana/Documents/4proj/\(shootingDate)/matome2.mov")
